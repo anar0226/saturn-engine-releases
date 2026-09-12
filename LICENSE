@@ -1,0 +1,136 @@
+# Saturn Engine — Licence
+
+**Version 0.1.0 (beta) · 11 September 2026**
+
+> This licence is written to be read. It is not legal advice and it has not been
+> reviewed by a lawyer. Before Saturn Engine leaves beta, have one read it.
+
+Saturn Engine is two things under one download, and they are licensed
+differently on purpose.
+
+| | What it is | What you may do |
+|---|---|---|
+| **The Editor** | The Saturn Engine application you install and run | Use it, free, while it is in beta. Do not redistribute or reverse engineer it. |
+| **The Runtime SDK** | Saturn's own GDScript that gets copied *into* the games you export (`sdk/*.gd`) | Copy, modify and ship it inside your games, forever, for free. |
+| **Your Game** | Everything you make | Yours. Entirely. |
+
+---
+
+## 1. Definitions
+
+**"Saturn"** means Saturn Engine and its licensor.
+
+**"The Editor"** means the Saturn Engine desktop application, its installer, and
+every file it installs, except the Runtime SDK and the third-party components
+listed in section 6.
+
+**"The Runtime SDK"** means the GDScript source files Saturn copies into a game
+you export — the files under `sdk/` in the exported project, and any Saturn code
+generated into your project's own source.
+
+**"Your Game"** means any software you create using the Editor, including its
+code, assets, and the binaries you export.
+
+---
+
+## 2. Your Game is yours
+
+You own Your Game outright. Saturn claims no ownership of it, no copyright in
+it, and no share of what it earns.
+
+You may sell Your Game, give it away, put it on any store, keep it closed, open
+its source, or abandon it. You need no permission and you owe no royalty, no
+revenue share, and no reporting.
+
+**This is permanent and it is not conditional on anything.** It survives this
+licence being superseded, the Editor's terms changing, the beta ending, and
+Saturn ceasing to exist. A game you ship today stays shipped on these terms
+forever. Saturn cannot revoke this grant, for any version, retroactively or
+otherwise.
+
+## 3. The Runtime SDK — the part that travels with Your Game
+
+Every game exported from Saturn carries Saturn's own GDScript inside it. Without
+a licence to redistribute that code, you could not legally ship what you make,
+which would make section 2 worthless.
+
+So: Saturn grants you a **perpetual, worldwide, irrevocable, royalty-free,
+sublicensable** licence to use, copy, modify and distribute the Runtime SDK as
+part of Your Game, in source or compiled form.
+
+You do not need to credit Saturn. You may not distribute the Runtime SDK on its
+own, separately from a game, as a competing SDK or engine.
+
+Like section 2, this grant is irrevocable for every copy already distributed.
+
+## 4. The Editor
+
+While Saturn Engine is in beta, the Editor is licensed to you free of charge,
+for any purpose including commercial work, on any number of machines you
+personally use.
+
+You may not:
+
+- redistribute, resell, rent or sublicense the Editor itself;
+- reverse engineer, decompile or disassemble it, except where law expressly
+  permits that despite this term;
+- remove or alter its notices.
+
+**The Editor's terms may change after beta.** A future version may cost money or
+carry different conditions. That affects future versions of the Editor only.
+It never reaches back to section 2 or section 3, and it never affects a game you
+have already made or shipped.
+
+## 5. Beta, warranty, and liability
+
+Saturn Engine is beta software provided **"as is", without warranty of any
+kind**, express or implied, including merchantability, fitness for a particular
+purpose, and non-infringement.
+
+It is not code-signed, so Windows SmartScreen will warn you about an unknown
+publisher. That warning is accurate: there is no certificate yet.
+
+To the maximum extent the law allows, Saturn is not liable for any damages
+arising from the software or its use — including lost work, lost data, lost
+profits, or business interruption — even if told such damages were possible.
+
+**Back up your projects.** This is beta software and you should treat it that
+way.
+
+Nothing here limits liability that cannot legally be limited, and nothing here
+takes away consumer rights you have by law where you live.
+
+## 6. Other people's work, shipped inside this
+
+Saturn Engine distributes components owned by others, under their own licences,
+which govern those components and not this one:
+
+- **Godot Engine** — MIT licence. Copyright (c) 2014-present Godot Engine
+  contributors; copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur. The full
+  text and the third-party notices ship with the application, under
+  `resources/godot/licenses/`. Saturn Engine is not affiliated with or endorsed
+  by the Godot Foundation.
+- **Sample city data** — © OpenStreetMap contributors, licensed
+  [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Elevation data from
+  USGS 3DEP. **If you ship a game built on the bundled Salt Lake City sample,
+  ODbL requires you to credit OpenStreetMap somewhere a player can find it.**
+  Saturn adds that credit to exported games automatically; do not remove it.
+- **Fonts** — Archivo and Geist, under the SIL Open Font License; the licence
+  files ship alongside them.
+
+## 7. Ending
+
+This licence ends if you breach it. Sections 2 and 3 survive that, and survive
+everything else: whatever happens to this agreement, Your Game stays yours and
+stays shippable.
+
+## 8. Questions, and reporting a problem
+
+Open an issue: https://github.com/anar0226/saturn-engine-releases/issues
+
+For a security vulnerability, see [SECURITY.md](SECURITY.md) — please do not
+open a public issue for one.
+
+---
+
+© 2026 Saturn Engine. All rights reserved except as granted above.
