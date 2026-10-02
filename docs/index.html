@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saturn Engine — describe a game, watch it run, ship the .exe</title>
+    <meta
+      name="description"
+      content="Describe the game. Saturn writes real GDScript, gates it before it runs, and plays it back in a native Godot 4 process inside the editor. Windows desktop."
+    />
+
+    <!-- T11. A game engine is shared in Discord servers, on X, and in Reddit
+         threads, and every one of those unfurls a card from tags that did not
+         exist here — so a link to a site whose whole argument is how it looks
+         arrived as a grey rectangle. The image is a real chapter III frame,
+         built by `npm run site:og`.
+
+         THE ORIGIN IS BAKED IN, four times, because a crawler cannot resolve a
+         relative og:image — it fetches that URL from somewhere else entirely.
+         GitHub Pages, the public releases repo (/saturn-engine-releases/). If it moves,
+         or a custom domain lands in front of it, the four
+         literals below move together with the SITE constant in
+         tests/site/site.spec.ts, which asserts they all agree. -->
+    <link rel="canonical" href="https://anar0226.github.io/saturn-engine-releases/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saturn Engine" />
+    <meta property="og:url" content="https://anar0226.github.io/saturn-engine-releases/" />
+    <meta property="og:title" content="Describe a game. Watch it run. Ship the .exe." />
+    <meta
+      property="og:description"
+      content="A Windows desktop editor with a native Godot 4 process running inside it. Say what you want; it writes real GDScript, gates it before it runs, and exports a binary you own."
+    />
+    <meta property="og:image" content="https://anar0226.github.io/saturn-engine-releases/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Downtown Salt Lake City at night, rendered by the engine, under the words: Describe a game. Watch it run. Ship the .exe." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Describe a game. Watch it run. Ship the .exe." />
+    <meta
+      name="twitter:description"
+      content="A Windows desktop editor with a native Godot 4 process running inside it. Real GDScript, gated before it runs, exported as a binary you own."
+    />
+    <meta name="twitter:image" content="https://anar0226.github.io/saturn-engine-releases/og.jpg" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#0C0805" />
+
+    <!-- E1: the reveal is an OPT-IN, not a default. With no JS (or a script that
+         throws) nothing adds `js` to the root, every chapter stays visible, and
+         the page is a readable document. The old React build painted a blank
+         screen in that case, because there was no copy in the HTML at all. -->
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+
+    <!-- E7a: the display face only. Chapter I is pure typography, so this is
+         the first paint of the one screen every visitor sees; the other two
+         faces load normally and swap, which nobody notices at 11 and 16px.
+         crossorigin is required even same-origin — fonts always fetch in CORS
+         mode, and without it the preload is fetched twice and warms nothing. -->
+    <link rel="preload" href="fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="enhance.js"></script>
+  </head>
+
+  <body>
+    <a class="skip" href="#c1">Skip to content</a>
+
+    <a class="brand" href="#c1">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+        <circle cx="12" cy="11.5" r="5.6" stroke="currentColor" stroke-width="2" />
+        <ellipse cx="12" cy="11.5" rx="10.6" ry="3.6" stroke="#F5B544" stroke-width="1.5" transform="rotate(-20 12 11.5)" />
+      </svg>
+      Saturn Engine
+    </a>
+
+    <!-- D5: quiet in chapter I, solid from chapter II onward. `data-from` is the
+         chapter that turns it solid; enhance.js reads it. -->
+    <a class="dl" href="#get" data-from="c2">
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+        <path d="M0 2.3 6.5 1.4v6.2H0zM7.3 1.3 16 0v7.6H7.3zM0 8.4h6.5v6.2L0 13.7zM7.3 8.4H16V16l-8.7-1.2z" />
+      </svg>
+      Download
+    </a>
+
+    <!-- The rings are the through-line: one mark, persistent behind every
+         chapter, re-aimed per scene. Each chapter carries its own aim (E5a), so
+         this element holds no chapter knowledge of its own. -->
+    <div class="rings" id="rings" aria-hidden="true">
+      <svg viewBox="0 0 1200 420" fill="none">
+        <defs>
+          <linearGradient id="rg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#F5B544" stop-opacity="0" />
+            <stop offset="38%" stop-color="#FFD894" stop-opacity=".55" />
+            <stop offset="62%" stop-color="#F5B544" stop-opacity=".35" />
+            <stop offset="100%" stop-color="#C98F3C" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <ellipse cx="600" cy="210" rx="560" ry="118" stroke="url(#rg)" stroke-width="1.5" />
+        <ellipse cx="600" cy="210" rx="480" ry="96" stroke="url(#rg)" stroke-width="3" opacity=".5" />
+        <ellipse cx="600" cy="210" rx="392" ry="74" stroke="url(#rg)" stroke-width="1" opacity=".4" />
+      </svg>
+    </div>
+
+    <!-- T9: the rail's stand-in below 900px. Decoration, not navigation — the
+         chapters are named regions and that is what carries the semantics, so
+         this is hidden from assistive tech rather than pretending to be a
+         progressbar nobody can act on. -->
+    <div class="progress" id="progress" aria-hidden="true"><span></span></div>
+
+    <!-- Built from the chapters by enhance.js (E5a). Empty in the source on
+         purpose: a hand-written rail is a second list to keep in sync. With no
+         JS it stays empty and the page is still fully readable by scrolling. -->
+    <nav class="rail" id="rail" aria-label="Chapters"></nav>
+
+    <main class="reel" id="reel">
+      <!-- ═══ I. NOTHING ═══════════════════════════════════════════════════ -->
+      <section
+        class="ch"
+        id="c1"
+        aria-labelledby="c1h"
+        data-label="Nothing"
+        data-sub="what it is"
+        data-ring="translateY(16vh) scale(1)"
+        data-ring-opacity="1"
+      >
+        <!-- T3 — the two beats. The markup IS the second beat: everything on
+             screen, in its final place. The script adds the FIRST beat by
+             holding the rest back for 1.2s, which is why no-JS and reduced
+             motion both land on the finished state with nothing to undo. -->
+        <div class="inner inner--center">
+          <p class="eyebrow rise beat">Windows desktop editor &middot; native Godot&nbsp;4 runtime</p>
+          <h1 class="display rise beat" id="c1h">Describe a game. Watch it run. Ship the&nbsp;.exe.</h1>
+          <p class="lede">
+            <span class="opening">This is an empty scene.</span>
+            <span class="beat">
+              A Vulkan context, a physics tick, and nothing in it. Everything past this screen
+              is Saturn: the gate an ask goes through, a game running in its viewport, and what
+              it finds wrong.
+            </span>
+          </p>
+          <p class="rise beat">
+            <a class="cta cta--ghost" href="#get">Download for Windows</a>
+          </p>
+        </div>
+        <p class="hint" aria-hidden="true">scroll</p>
+      </section>
+
+      <!-- ═══ II. THE ASK ══════════════════════════════════════════════════ -->
+      <section
+        class="ch"
+        id="c2"
+        aria-labelledby="c2h"
+        data-label="The ask"
+        data-sub="the prompt"
+        data-ring="translateY(-30vh) scale(1.5) rotate(-7deg)"
+        data-ring-opacity=".7"
+        style="--scrim: linear-gradient(180deg, #0c0805 0%, rgba(12, 8, 5, 0.55) 40%, #0c0805 100%)"
+      >
+        <div class="media"><img src="frames/fog.jpg" alt="" class="wash" /></div>
+        <div class="scrim"></div>
+        <div class="inner">
+          <p class="eyebrow rise">The ask</p>
+          <h2 class="display display--md rise" id="c2h">One sentence. Then six things happen to it.</h2>
+
+          <div class="prompt rise">
+            <span class="chev" aria-hidden="true">&rsaquo;</span>
+            <!-- The full prompt is in the HTML. enhance.js retypes it; with no JS
+                 it simply reads as written, which is the point. -->
+            <span class="prompt__txt" id="typed">make it night, with traffic on Main Street</span>
+            <i class="caret" aria-hidden="true"></i>
+          </div>
+
+          <div class="gate rise">
+            <div class="gate__bar">
+              <span class="dot" id="gdot" aria-hidden="true"></span>
+              <span id="gstate">gate &middot; passed</span>
+              <span class="gate__file mono">city_drive.gd &middot; godot-sdk-0.5.0</span>
+            </div>
+            <ol class="gate__rows" id="grows">
+              <li data-by="you"><span class="dot" aria-hidden="true"></span><span class="k">you</span><span class="t">&ldquo;make it night, with traffic on Main Street&rdquo;</span><span class="m">prompt</span></li>
+              <li data-by="eng"><span class="dot" aria-hidden="true"></span><span class="k">plan</span><span class="t">shows the change before making it</span><span class="m">first</span></li>
+              <li data-by="eng"><span class="dot" aria-hidden="true"></span><span class="k">generate</span><span class="t">GDScript against the pinned SDK</span><span class="m">Claude</span></li>
+              <li data-by="eng"><span class="dot" aria-hidden="true"></span><span class="k">dry run</span><span class="t">parsed and type-checked before anything runs</span><span class="m">gated</span></li>
+              <li data-by="eng"><span class="dot" aria-hidden="true"></span><span class="k">run</span><span class="t">hot-applied to the live process, no reload</span><span class="m">live</span></li>
+              <li data-by="you"><span class="dot" aria-hidden="true"></span><span class="k">checkpoint</span><span class="t">kept. one click rolls scene and script back together</span><span class="m">saved</span></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ III. THE CITY ════════════════════════════════════════════════ -->
+      <section
+        class="ch ch--media"
+        id="c3"
+        aria-labelledby="c3h"
+        data-label="The city"
+        data-sub="the engine, running"
+        data-ring="translateY(38vh) scale(2.1) rotate(4deg)"
+        data-ring-opacity=".3"
+        data-video="c3vid"
+        style="--scrim: linear-gradient(180deg, rgba(12,8,5,.62) 0%, rgba(12,8,5,0) 26%, rgba(12,8,5,0) 46%, rgba(12,8,5,.86) 92%)"
+      >
+        <div class="media">
+          <!-- T8 makes the source lazy (attached on entry to chapter II) and E1b
+               makes that possible at all. T6 adds the autoplay-refusal fallback.
+               Until then: poster paints, clip plays if the browser allows it. -->
+          <video id="c3vid" muted loop playsinline preload="none" poster="frames/drive.jpg">
+            <source src="frames/drive.webm" type="video/webm" />
+          </video>
+        </div>
+        <div class="scrim"></div>
+        <div class="inner">
+          <!-- T6: the eyebrow carries its own paused wording, so the state and
+               the copy cannot drift apart in two files. -->
+          <p class="eyebrow eyebrow--bright rise" data-paused="paused &middot; press to run">The city &middot; in the viewport</p>
+          <!-- One word changes, so the swap does not jar and the claim stays
+               true of a still frame that did come out of the engine. -->
+          <h2 class="display display--lg rise" id="c3h" data-paused="It is already built.">It is already running.</h2>
+          <button class="playctl" type="button" hidden>
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M3 1.5v13l11-6.5z" /></svg>
+            Press to run
+          </button>
+          <p class="lede lede--bright rise">
+            Not a render. Not a preview. A native Godot&nbsp;4 process, reparented into the editor
+            viewport, on the engine your finished build ships on.
+          </p>
+          <ul class="readout rise">
+            <li>city_drive.gd</li>
+            <li>60 fps</li>
+            <li>Forward+</li>
+            <li>SDFGI</li>
+            <li>Godot physics</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ═══ IV. THE INSTRUMENT ═══════════════════════════════════════════ -->
+      <!-- The four capability claims live here as annotations, not as a card
+           grid (D2). Headline and annotation wording are the plan's one open
+           item, drafted here so the structure is real; T4 settles them against
+           the editor capture from T7. -->
+      <section
+        class="ch"
+        id="c4"
+        aria-labelledby="c4h"
+        data-label="The instrument"
+        data-sub="the editor"
+        data-ring="translateY(-8vh) scale(1.2) rotate(-2deg)"
+        data-ring-opacity=".35"
+        style="--scrim: radial-gradient(90% 70% at 50% 38%, rgba(36,27,16,.5) 0%, #0c0805 76%)"
+      >
+        <div class="scrim"></div>
+        <div class="inner inner--wide">
+          <p class="eyebrow rise">The instrument</p>
+          <h2 class="display display--md rise" id="c4h">Everything it does, it does in one window.</h2>
+          <div class="instrument">
+            <figure class="instrument__shot rise">
+              <!-- The real editor (2026-10-02): City Drive open in Studio, its game
+                   running in the viewport, captured from the screen. -->
+              <img src="frames/editor.jpg" alt="The Saturn editor with City Drive open: the scene list, the game running in the viewport, the behaviour graph and the inspector." />
+              <figcaption class="mono">City Drive in Studio &middot; the game running in the viewport</figcaption>
+            </figure>
+            <ol class="claims">
+              <li class="rise">
+                <b>One engine process, reparented into the viewport.</b>
+                <span>Vulkan Forward+, SDFGI and the real physics tick are all on while you author.</span>
+              </li>
+              <li class="rise">
+                <b>Chat, scene tree, inspector and graphs compile to one source.</b>
+                <span>The same versioned SDK. Readable GDScript you can hand-edit. Nothing behind a black box.</span>
+              </li>
+              <li class="rise">
+                <b>Everything a game actually needs.</b>
+                <span>Audio buses, in-game UI, terrain and navmesh, gameplay AI, VFX, save, input, authoritative multiplayer, a frame profiler.</span>
+              </li>
+              <li class="rise">
+                <b>It exports a binary you own.</b>
+                <span>A native Windows or Linux build with a press kit beside it. No store in between, no split, no runtime account. (Install Godot&rsquo;s free 4.7.1 export templates once.)</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ V. THE LOOK ══════════════════════════════════════════════════ -->
+      <section
+        class="ch"
+        id="c5"
+        aria-labelledby="c5h"
+        data-label="The look"
+        data-sub="it reviews itself"
+        data-ring="translateY(-2vh) scale(1.15) rotate(-1deg)"
+        data-ring-opacity=".35"
+        style="--scrim: radial-gradient(90% 70% at 50% 40%, rgba(36,27,16,.42) 0%, #0c0805 74%)"
+      >
+        <div class="scrim"></div>
+        <div class="inner inner--wide">
+          <div class="look">
+            <figure class="look__sheet rise">
+              <!-- §11: a real review run (2026-10-02) against City Drive at night: the
+                   playtest drove it and took these nine shots, the look check flagged
+                   the floating orb, and the other notes are what the shots show. -->
+              <img src="frames/sheet.jpg" alt="A nine-frame review sheet from City Drive at night: the car at the start, the car from four sides, and three street views with buses and traffic." />
+              <figcaption class="mono">review-2026-10-02 &middot; 9 frames &middot; city_drive.gd</figcaption>
+            </figure>
+            <div>
+              <p class="eyebrow rise">The look</p>
+              <h2 class="display display--sm rise" id="c5h">Then it goes and looks at&nbsp;it.</h2>
+              <p class="lede lede--tight rise">
+                Saturn&rsquo;s playtest drives the running game and takes the shots; its look check
+                flags what is wrong. These notes are from this run.
+              </p>
+              <ul class="notes">
+                <li><span class="vd vd--keep">keep</span><span><b>Traffic reads at speed</b><span class="d">Buses, vans and cars hold their lanes on the real streets at 100&nbsp;km/h.</span></span></li>
+                <li><span class="vd vd--fix">fix</span><span><b>Orb 1 floats over Main Street</b><span class="d">Found by the look check: a pickup 4.2&nbsp;m up, with nothing under it.</span></span></li>
+                <li><span class="vd vd--keep">keep</span><span><b>Warm windows, dark street</b><span class="d">The lit facades carry the night and the road stays readable.</span></span></li>
+                <li><span class="vd vd--fix">fix</span><span><b>Tail lights bloom wide</b><span class="d">Stopped, the brake lights wash over the whole rear of the car.</span></span></li>
+                <li><span class="vd vd--fix">fix</span><span><b>Trees read flat at night</b><span class="d">The street trees stay a bright, even green under orange lamps.</span></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ VI. THE SHIP ═════════════════════════════════════════════════ -->
+      <section
+        class="ch ch--media"
+        id="get"
+        aria-labelledby="c6h"
+        data-label="The ship"
+        data-sub="the .exe"
+        data-ring="translateY(12vh) scale(1.05)"
+        data-ring-opacity=".9"
+        style="--scrim: linear-gradient(180deg, #0c0805 0%, rgba(12,8,5,.66) 42%, #0c0805 100%)"
+      >
+        <div class="media"><img src="frames/block.jpg" alt="" class="drift wash-strong" /></div>
+        <div class="scrim"></div>
+        <div class="inner">
+          <p class="eyebrow rise">The ship</p>
+          <h2 class="display display--lg rise" id="c6h">It leaves as a file you own.</h2>
+          <p class="lede rise">
+            A native Windows build with a press kit written beside it. Put it on Steam or Itch
+            yourself. No store in between, no revenue split, no runtime account.
+          </p>
+          <p class="actions rise">
+            <!-- T19 pointed this at releases because href="#" made the site's
+                 primary conversion action do nothing. T8 moves it off the source
+                 repo: that one is private, so its releases page is a 404 for
+                 every visitor who is not signed in as the owner. The build lives
+                 in a separate public repo; the source stays private. -->
+            <a class="cta" href="https://github.com/anar0226/saturn-engine-releases/releases/latest">
+              <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M0 2.3 6.5 1.4v6.2H0zM7.3 1.3 16 0v7.6H7.3zM0 8.4h6.5v6.2L0 13.7zM7.3 8.4H16V16l-8.7-1.2z" />
+              </svg>
+              Download for Windows
+            </a>
+            <a class="cta cta--ghost" href="#fine">What it doesn&rsquo;t do</a>
+          </p>
+          <p class="fineprint mono rise">Free while in beta &middot; Windows 10/11, 64-bit &middot; Vulkan-capable GPU</p>
+        </div>
+      </section>
+
+      <!-- ═══ CODA — the film ends, the document begins ════════════════════ -->
+      <section class="coda" id="fine" aria-labelledby="codah">
+        <div class="wrap">
+          <p class="eyebrow">Honest scope</p>
+          <h2 class="display display--sm" id="codah">What it doesn&rsquo;t do, before you install it.</h2>
+
+          <div class="cols">
+            <div>
+              <p class="eyebrow eyebrow--ok">Yes</p>
+              <ul class="scope">
+                <li><span class="mark mark--yes" aria-hidden="true">+</span><span><b>Windows editor and native export,</b> to Windows and Linux. Exporting needs Godot&rsquo;s free 4.7.1 export templates, installed once.</span></li>
+                <li><span class="mark mark--yes" aria-hidden="true">+</span><span><b>AI that writes readable GDScript,</b> gated before it runs, checkpointed after.</span></li>
+                <li><span class="mark mark--yes" aria-hidden="true">+</span><span><b>Full visual authoring &mdash;</b> scene, inspector, graphs, terrain, navmesh, profiler.</span></li>
+                <li><span class="mark mark--yes" aria-hidden="true">+</span><span><b>Authoritative multiplayer</b> with a real server tick, not a peer hack.</span></li>
+                <li><span class="mark mark--yes" aria-hidden="true">+</span><span><b>Two people on one game,</b> through a shared folder and GitHub. <a href="https://github.com/anar0226/saturn-engine-releases/blob/main/TEAM.md">The guide</a>.</span></li>
+              </ul>
+            </div>
+            <div>
+              <p class="eyebrow eyebrow--no">No</p>
+              <ul class="scope">
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No AI of its own.</b> The AI runs on your Claude: a Claude subscription through Claude Code, or an Anthropic API key. The rest of the editor works without either.</span></li>
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No asset marketplace.</b> Bring your own, or generate them in place.</span></li>
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No from-scratch renderer.</b> Godot&rsquo;s is better than one we would write.</span></li>
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No shareable web link.</b> A game here is a binary; the web runtime was retired on purpose.</span></li>
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No macOS or Linux editor yet,</b> and no console export. Deferred, not excluded.</span></li>
+                <li><span class="mark mark--no" aria-hidden="true">&minus;</span><span><b>No code-signing certificate yet.</b> Windows SmartScreen warns on first run; you get past it with More info &rsaquo; Run anyway.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <ul class="facts">
+            <li><span class="n">1</span><span class="l">engine process, reparented into the editor viewport</span></li>
+            <li><span class="n">0</span><span class="l">lines you have to write before it runs</span></li>
+            <li><span class="n">100%</span><span class="l">GDScript out &mdash; readable, yours, hand-editable</span></li>
+            <li><span class="n">.exe</span><span class="l">what ships: a native Windows build you own</span></li>
+          </ul>
+
+          <footer>
+            <span>Saturn Engine</span>
+            <span class="footer__mid"><a href="https://github.com/anar0226/saturn-engine-releases/issues">Report a problem</a> &middot; <a href="https://github.com/anar0226/saturn-engine-releases/blob/main/LICENSE">Licence</a><br />Built on Godot&nbsp;4 &middot; not affiliated with the Godot Foundation<br />Sample city data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL&nbsp;1.0</a> &middot; elevation USGS&nbsp;3DEP</span>
+            <span>&copy; 2026 Saturn Engine</span>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

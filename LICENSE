@@ -1,6 +1,6 @@
 # Saturn Engine — Licence
 
-**Version 0.1.0 (beta) · 11 September 2026**
+**Version 0.2.0 (beta) · 2 October 2026**
 
 > This licence is written to be read. It is not legal advice and it has not been
 > reviewed by a lawyer. Before Saturn Engine leaves beta, have one read it.
@@ -22,7 +22,7 @@ differently on purpose.
 
 **"The Editor"** means the Saturn Engine desktop application, its installer, and
 every file it installs, except the Runtime SDK and the third-party components
-listed in section 6.
+and bundled content listed in section 6.
 
 **"The Runtime SDK"** means the GDScript source files Saturn copies into a game
 you export — the files under `sdk/` in the exported project, and any Saturn code
@@ -100,23 +100,63 @@ way.
 Nothing here limits liability that cannot legally be limited, and nothing here
 takes away consumer rights you have by law where you live.
 
-## 6. Other people's work, shipped inside this
+## 6. Other people's work, and the content that ships with Saturn
 
 Saturn Engine distributes components owned by others, under their own licences,
-which govern those components and not this one:
+which govern those components and not this one. It also ships sample content
+(models, sounds, music, textures, interface art and fonts) that a game you make
+may use. Paths below are inside the install folder; the game content is under
+`resources/godot-runtime/project/`.
 
-- **Godot Engine** — MIT licence. Copyright (c) 2014-present Godot Engine
-  contributors; copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur. The full
-  text and the third-party notices ship with the application, under
-  `resources/godot/licenses/`. Saturn Engine is not affiliated with or endorsed
-  by the Godot Foundation.
-- **Sample city data** — © OpenStreetMap contributors, licensed
-  [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Elevation data from
-  USGS 3DEP. **If you ship a game built on the bundled Salt Lake City sample,
-  ODbL requires you to credit OpenStreetMap somewhere a player can find it.**
-  Saturn adds that credit to exported games automatically; do not remove it.
-- **Fonts** — Archivo and Geist, under the SIL Open Font License; the licence
-  files ship alongside them.
+**You may ship Saturn's own bundled content in Your Game.** Saturn grants you a
+perpetual, worldwide, irrevocable, royalty-free licence to use, modify and
+distribute the generated models and mannequin characters listed below as part of
+Your Game, on the same terms as the Runtime SDK in section 3. You may not
+redistribute them on their own, as an asset pack or library. Every other item
+below is licensed by its owner under the terms given; where a line says *you
+must*, that is a condition of that licence and it applies to any game that
+contains the component.
+
+- **Godot Engine 4.7.1** — MIT licence. Copyright (c) 2014-present Godot Engine
+  contributors; copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur. The licence
+  text is `resources/godot-licenses/LICENSE.txt`, and the notices for the
+  third-party code inside Godot are in `resources/godot-licenses/COPYRIGHT.txt`.
+  Saturn Engine is not affiliated with or endorsed by the Godot Foundation.
+  **Every game you export contains the Godot runtime, so you must include Godot's
+  copyright and licence notice with it**, for example in your credits or as
+  those two files next to your game's executable.
+- **Sample city data (City Drive)** — roads and building footprints ©
+  OpenStreetMap contributors, licensed under the
+  [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/).
+  Elevation data from USGS 3DEP (public domain). Both are in `assets/slc/`, with
+  `ATTRIBUTION.md`. **If you ship a game that contains this data, ODbL requires
+  you to credit OpenStreetMap contributors somewhere a player can find it, and
+  the city data stays under ODbL.** Saturn adds that credit to exported games
+  automatically; do not remove it.
+- **Generated models** — the cars, downtown buildings, dungeon props and
+  characters, firing-range props, pickup orb, sports car and cherry tree
+  (`assets/cars/`, `assets/buildings/`, `assets/dungeon/`, `assets/range/`,
+  `assets/pickups/`, `assets/sports-car.glb`, `assets/sakura-tree.glb`) were
+  generated with Meshy (meshy.ai) for Saturn. The mannequin characters
+  (`assets/characters/`) were made by Saturn. Both are covered by the grant above.
+- **KayKit** — the heroes, skeletons and dungeon, Halloween and furniture props
+  in `assets/kaykit/`, by Kay Lousberg (kaylousberg.com), CC0 1.0 (public
+  domain). No credit is required; each pack keeps its `LICENSE.txt`.
+- **Sound effects and music** — Kenney (www.kenney.nl) and OpenGameArt.org
+  contributors, all CC0 1.0 (public domain). No credit is required. Every pack,
+  title and author is listed in `assets/audio/CREDITS.md`, and each Kenney pack
+  keeps its own `License.txt`.
+- **Interface art** — Kenney, "UI Pack (RPG Expansion)", CC0 1.0
+  (`assets/ui/rpg/`, with `License-Kenney.txt`).
+- **Textures** — Poly Haven (polyhaven.com), CC0 1.0 (`assets/textures/`).
+- **Fonts** — Geist and Geist Mono (© 2023 Vercel, in collaboration with
+  basement.studio), Cinzel (© 2020 The Cinzel Project Authors) and Alegreya Sans
+  (© 2013 The Alegreya Sans Project Authors), all under the SIL Open Font License
+  1.1. Each licence file ships beside its font. **A game that uses one of these
+  fonts must carry its OFL file**; Saturn's export copies it with a themed game's
+  fonts.
+- **Electron and Chromium** — their licences are `LICENSE.electron.txt` and
+  `LICENSES.chromium.html` in the install folder.
 
 ## 7. Ending
 
